@@ -1,8 +1,9 @@
 "use strict";
 const fetch = require("node-fetch");
-const config = require("./config");
 const chalk = require("chalk");
+const terminalLink = require("terminal-link");
 const { error, success, debug, httpUtil } = require("util-box");
+const config = require("./config");
 const wait = require("./wait");
 
 // fetch alternate domain-name suggestions
@@ -20,7 +21,9 @@ async function fetchSuggestions(input) {
 🌎  Here are some suggestions similar to ${chalk.cyan.underline(input)}`)} `
 			);
 			body.map(domains => {
-				console.log(`${chalk.greenBright(domains.domain)} `);
+				console.log(
+					`${chalk.greenBright(terminalLink(domains.domain, `${config.PROVIDER_ENDPOINT}${domains.domain}`))} `
+				);
 			});
 			stopSpinner();
 		}
@@ -39,8 +42,7 @@ async function checkAvailability(input) {
 		let res = await fetch(reqUrl);
 		if (!/2[0-9]/.test(res.status)) {
 			debug(`Error! Expected 2xx, found ${res.status}`);
-			error(`
-			Unable to fetch Domain Availability!
+			error(` Unable to fetch Domain Availability!
 			${res.status}`);
 			stopSpinner();
 		} else {
@@ -48,10 +50,11 @@ async function checkAvailability(input) {
 			if (body.available) {
 				if (body.period > 1) body.numberofYears = "years";
 				else body.numberofYears = "year";
+				let domainLink = terminalLink(body.domain, `${config.PROVIDER_ENDPOINT}${body.domain}`);
 				console.log(`
   ${chalk.bold.underline(`Available`)}
-  Domain : ${chalk.greenBright.underline(body.domain)}
-  Price  : ${chalk.white(body.price)} ${chalk.yellowBright(body.currency)}
+  Domain : ${chalk.greenBright(domainLink)}
+  Price (exclusive of taxes) : ${chalk.white(body.price)} ${chalk.yellowBright(body.currency)}
   Period : ${chalk.white(body.period)} ${body.numberofYears}
 `);
 			} else {
