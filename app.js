@@ -53,8 +53,9 @@ async function checkAvailability(input) {
 				let domainLink = terminalLink(body.domain, `${config.PROVIDER_ENDPOINT}${body.domain}`);
 				console.log(`
   ${chalk.bold.underline(`Available`)}
+  ${chalk.dim("The prices are subject to vary based on discounts, taxes and other fees")}
   Domain : ${chalk.greenBright(domainLink)}
-  Price (exclusive of taxes) : ${chalk.white(body.price)} ${chalk.yellowBright(body.currency)}
+  Price  : ${chalk.white(body.price / 1000000)} ${chalk.yellowBright(body.currency)}
   Period : ${chalk.white(body.period)} ${body.numberofYears}
 `);
 			} else {
