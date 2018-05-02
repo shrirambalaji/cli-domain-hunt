@@ -42,8 +42,8 @@ async function checkAvailability(input) {
 		let res = await fetch(reqUrl);
 		if (!/2[0-9]/.test(res.status)) {
 			debug(`Error! Expected 2xx, found ${res.status}`);
-			error(` Unable to fetch Domain Availability!
-			${res.status}`);
+			error(`
+Unable to fetch Domain Availability! Error: ${res.status}`);
 			stopSpinner();
 		} else {
 			let body = await res.json();
@@ -68,7 +68,7 @@ Oh no! That domain seems to be taken.
 		}
 	} catch (err) {
 		error(`
-		Unable to Fetch domain availability ${err}`);
+Unable to Fetch domain availability ${err}`);
 		stopSpinner();
 	}
 }
@@ -78,9 +78,19 @@ const performComparison = input => {
 };
 
 const app = (input, flags) => {
-	if (flags.compare || flags.c) performComparison(input);
-	if (flags.suggestions || flags.s) fetchSuggestions(input);
-	else checkAvailability(input);
+	if (!input) {
+		console.log(`
+${chalk.red(
+			`Missing or invalid input: domain-name
+Please enter a valid domain name`
+		)}
+`);
+		console.log(`${chalk.gray("Use the --help to view usage instructions")}`);
+	} else {
+		if (flags.compare || flags.c) performComparison(input);
+		if (flags.suggestions || flags.s) fetchSuggestions(input);
+		else checkAvailability(input);
+	}
 };
 
 module.exports = app;

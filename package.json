@@ -1,20 +1,22 @@
 {
   "name": "cli-domain-hunt",
-  "version": "1.0.2",
-  "description": "A command line interface for finding and comparing domain-names to buy.",
+  "version": "1.0.4",
+  "description": "A command line interface for finding and suggesting domain-names to buy.",
   "main": "cli.js",
   "scripts": {
-    "test": "ava"
+    "test": "ava",
+    "start": "babel-node --presets env cli.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Shriram-Balaji/cli-domain-hunt.git"
   },
   "bin": {
-    "domain-hunt": "./cli.js"
+    "domain-hunt": "babel-node --presets env ./cli.js"
   },
   "keywords": [
     "['cli'",
+    "'command-line'",
     "'domain-search'",
     "'domain'",
     "'whois']"
@@ -27,8 +29,23 @@
   "homepage": "https://github.com/Shriram-Balaji/cli-domain-hunt#readme",
   "devDependencies": {
     "ava": "1.0.0-beta.4",
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.6.1",
+    "babel-register": "^6.26.0",
     "execa": "^0.10.0",
     "prettier": "^1.12.1"
+  },
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "targets": {
+            "node": "current"
+          }
+        }
+      ]
+    ]
   },
   "dependencies": {
     "ansi-escapes": "^3.1.0",
