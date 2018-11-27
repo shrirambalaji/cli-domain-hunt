@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/Shriram-Balaji/cli-domain-hunt#readme",
   "devDependencies": {
-    "ava": "1.0.0-beta.4",
+    "ava": "1.0.0-rc.2",
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.6.1",
     "babel-register": "^6.26.0",
