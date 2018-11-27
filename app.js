@@ -2,7 +2,8 @@
 const fetch = require("node-fetch");
 const chalk = require("chalk");
 const terminalLink = require("terminal-link");
-const { error, success, debug, httpUtil } = require("util-box");
+const { error, success, debug } = require("util-box").outputUtil;
+const { httpUtil } = require("util-box");
 const config = require("./config");
 const wait = require("./wait");
 
